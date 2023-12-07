@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+
+</head>
+<body>
+    <input type="button" value="Make PDF" onclick="onCreatePdf()" />
+</body>
+</html>
+<script src="jspdf.umd.min.js"></script>
+<script src="jspdf.plugin.autotable.js"></script>
+<script>
+    function onCreatePdf() {
+        const { jsPDF } = window.jspdf;
+
+        var data = [
+            {id: 1, name: 'John', email: 'john@example.com'},
+            {id: 2, name: 'Jane', email: 'jane@example.com'},
+            {id: 3, name: 'Mary', email: 'mary@example.com'},
+        ];
+
+        // Column headers
+        var headers = ['ID', 'Name', 'Email'];
+
+        // Instantiate jsPDF
+        var doc = new jsPDF();
+
+        // Transform data for autoTable
+        var rows = data.map(function(item){
+            return [item.id, item.name, item.email];
+        });
+
+        // Use autoTable to generate the table
+        doc.autoTable({
+            head: [headers],
+            body: rows,
+        });
+
+        // Save the PDF
+        doc.save('table.pdf');
+    }
+</script>
